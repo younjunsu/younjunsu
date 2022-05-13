@@ -1,0 +1,165 @@
+#####################################################################################
+# TIBERO 참고용 기동 절차 입니다.
+**# ※ TIBERO RDBMS 외 기타 솔루션 연동 될 시 기동 순서가 변경 될 수 있어 주의하십시요.
+# ※ 별도 기동 절차서가 존재한다면, 하기의 기술된 내용은 사용하지 마십시요.**
+#####################################################################################
+#############
+#### SINGLE
+#############
+## 확인
+tibero$ ps -ef |grep -E "tbsvr|tibero"
+
+## 중지
+tibero$ tbdown immediate
+
+## 기동
+tibero$ tbboot 
+
+## 기동 중 오류 발생할 경우
+-> 오류 발생할 경우
+tibero$ tbdown clean
+tibero$ tbboot
+
+#############
+#### TSC
+#############
+## 확인
+primary tibero$ cmrctl show
+primary tibero$ $ ps -ef |grep -E "tbsvr|tibero|tbcm"
+standby tibero$ cmrctl show
+standby observer$ cmrctl show
+standby tibero$ $ ps -ef |grep -E "tbsvr|tibero|tbcm"
+
+## 중지
+standby root# su - observer
+standby observer$ tbcmobs -d
+
+primary root# su - tibero
+primary tibero$ tbdown immediate
+primary tibero$ tbcm -d
+
+standby root# su - tibero
+standby tibero$ tbdown immediate
+standby tibero$ tbcm -d
+
+## 기동
+standby root# su - observer
+standby tibero$ tbcmobs -b
+
+primary root# su - tibero
+primary tibero$ tbcm -b
+primary tibero$ tbboot
+
+standby root# su - tibero
+standby tibero$ tbcm -b
+standby tibero$ tbboot
+
+#############
+#### TSC VIP
+#############
+## 확인
+primary tibero$ cmrctl show
+primary tibero$ $ ps -ef |grep -E "tbsvr|tibero|tbcm"
+standby tibero$ cmrctl show
+standby observer$ cmrctl show
+standby tibero$ $ ps -ef |grep -E "tbsvr|tibero|tbcm"
+
+## 중지
+standby root# su - observer
+standby observer$ tbcmobs -d
+
+primary root# su - tibero
+primary tibero$ tbdown immediate
+primary tibero$ tbcm -d
+
+standby root# su - tibero
+standby tibero$ tbdown immediate
+standby tibero$ tbcm -d
+
+## 기동
+standby root# su - observer
+standby tibero$ tbcmobs -b
+
+standby root# tbcm -b
+standby root# cd ~tibero
+standby root# . .bash_profile 또는 . .profile
+-> TIBERO 환경 변수 내용이 들어있는 파일을 적용 해야합니다.
+standby root# tbcm -b
+standby root# su - tibero
+standby tibero$ tbboot
+
+primary root# tbcm -b
+primary root# cd ~tibero
+primary root# . .bash_profile 또는 . .profile
+-> TIBERO 환경 변수 내용이 들어있는 파일을 적용 해야합니다.
+primary root# tbcm -b
+primary root# su - tibero
+primary tibero$ tbboot
+
+#############
+#### TAC
+#############
+## 확인
+primary tibero$ cmrctl show
+primary tibero$ $ ps -ef |grep -E "tbsvr|tibero|tbcm"
+standby tibero$ cmrctl show
+standby tibero$ $ ps -ef |grep -E "tbsvr|tibero|tbcm"
+
+## 중지
+primary root# su - tibero
+primary tibero$ tbdown immediate
+primary tibero$ tbcm -d
+
+standby root# su - tibero
+standby tibero$ tbdown immediate
+standby tibero$ tbcm -d
+
+## 기동
+standby root# cd ~tibero
+standby root# source . .bash_profile 또는 . .profile
+-> TIBERO 환경 변수 내용이 들어있는 파일을 적용 해야합니다.
+standby root# tbcm -b
+standby root# su - tibero
+standby tibero$ tbboot
+
+primary root# cd ~tibero
+primary root# . .bash_profile 또는 . .profile
+-> TIBERO 환경 변수 내용이 들어있는 파일을 적용 해야합니다.
+primary root# tbcm -b
+primary root# su - tibero
+primary tibero$ tbboot
+
+#############
+#### TAC VIP
+#############
+## 확인
+primary tibero$ cmrctl show
+primary tibero$ $ ps -ef |grep -E "tbsvr|tibero|tbcm"
+standby tibero$ cmrctl show
+standby observer$ cmrctl show
+standby tibero$ $ ps -ef |grep -E "tbsvr|tibero|tbcm"
+
+## 중지
+primary root# su - tibero
+primary tibero$ tbdown immediate
+primary tibero$ tbcm -d
+
+standby root# su - tibero
+standby tibero$ tbdown immediate
+standby tibero$ tbcm -d
+
+## 기동
+standby root# cd ~tibero
+standby root# . .bash_profile 또는 . .profile
+-> TIBERO 환경 변수 내용이 들어있는 파일을 적용 해야합니다.
+standby root# tbcm -b
+standby root# su - tibero
+standby tibero$ tbboot
+
+primary root# cd ~tibero
+primary root# . .bash_profile 또는 . .profile
+-> TIBERO 환경 변수 내용이 들어있는 파일을 적용 해야합니다.
+primary root# tbcm -b
+primary root# su - tibero
+primary tibero$ tbboot
+#####################################################################################

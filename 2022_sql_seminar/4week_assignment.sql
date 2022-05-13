@@ -67,6 +67,66 @@ FROM
 		SELECT TO_DATE('20220420') ymd FROM DUAL
 	)
 
+# UNPIVOT
+WITH TEMP_YMD AS (
+	SELECT 
+		TO_CHAR(ymd) ymd_char,
+		TO_CHAR(TO_DATE(ymd,'yyyy/mm/dd')) ymd_date,
+		TO_CHAR(ymd,'D') ymd_d,
+		TO_CHAR(ymd,'DD') ymd_dd,
+		TO_CHAR(ymd,'DDD') ymd_ddd,
+		TO_CHAR(ymd,'DY') ymd_dy,
+		TO_CHAR(ymd,'DAY') ymd_day,	
+		TO_CHAR(ymd,'W') ymd_w,
+		TO_CHAR(ymd,'WW') ymd_ww,
+		TO_CHAR(ymd,'MM') ymd_mm,
+		TO_CHAR(ymd,'MON') ymd_mon,
+		TO_CHAR(ymd,'Q') ymd_q,
+		TO_CHAR(ymd,'YYYY') ymd_yyyy,
+		TO_CHAR(ymd,'YEAR') ymd_year
+	FROM
+		(
+			SELECT TO_DATE('20220420') ymd FROM DUAL
+		)
+)
+SELECT * FROM TEMP_YMD 
+UNPIVOT (VALUE FOR YMD_TYPE IN
+(
+ymd_char,
+ymd_date,
+ymd_d,
+ymd_dd,
+ymd_ddd,
+ymd_dy,
+ymd_day,	
+ymd_w,
+ymd_ww,
+ymd_mm,
+ymd_mon,
+ymd_q,
+ymd_yyyy,
+ymd_year
+));
+
+# RESULT
+YMD_TYPE VALUE            
+-------- -----------------
+YMD_CHAR 2022/04/20
+YMD_DATE 2022/04/20
+YMD_D    4
+YMD_DD   20
+YMD_DDD  110
+YMD_DY   수
+YMD_DAY  수요일
+YMD_W    3
+YMD_WW   16
+YMD_MM   04
+YMD_MON  4월
+YMD_Q    2
+YMD_YYYY 2022
+YMD_YEAR TWENTY TWENTY-TWO
+
+
 ###############################################
 answer quiz2
 ###############################################
