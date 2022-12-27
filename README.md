@@ -2,8 +2,3 @@
 
 # Possession
 * RDBMS
-* SQL Tunning
-* Shell scripts
-* python
-* OS
-* Network Packet
