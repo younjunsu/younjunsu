@@ -1,4 +1,8 @@
-# 👨‍💻 Junsu Yoon (younjunsu)
+---
+coverY: 0
+---
+
+# 👨‍💻 JunSu Yoon
 
 ### 🗄️ Database Engineer | Performance Tuning & Architecture
 

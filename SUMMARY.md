@@ -1,4 +1,4 @@
 # Table of contents
 
-* [👨‍💻 Junsu Yoon (younjunsu)](README.md)
+* [👨‍💻 JunSu Yoon](README.md)
 * [Projects](projects.md)
